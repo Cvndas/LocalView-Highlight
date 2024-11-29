@@ -1,6 +1,6 @@
 <h1 tabindex="-1" class="heading-element" dir="auto">
     <a target="_blank" rel="noopener noreferrer" href="Prez/icon.jpg">
-        <img src="Prez/icon.jpg" alt="icon" style="height: 1em; vertical-align: middle;">
+        <img src="Prez/icon.png" alt="icon" style="height: 1em; vertical-align: middle;">
     </a>
     Autokey-Highlight
 </h1>
@@ -13,6 +13,8 @@ Toggles a border in the viewport based on autokey state, with customizable color
 
 
 
-![main prez](Prez/main.jpg)
+![feature prez](Prez/feature.jpg)
+
+![animated prez](Prez/demoAnimation.webp)
 
 ![preferences prez](Prez/prefs.jpg)
