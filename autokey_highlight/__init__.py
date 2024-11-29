@@ -6,7 +6,7 @@ bl_info = {
     'name': 'Autokey Highlight',
     'author': 'Loïc \"Lauloque\" Dautry',
     'description': "Toggles a border in the viewport based on autokey state, with customizable color and width",
-    'version': (1, 0, 1),
+    'version': (1, 0, 2),
     'blender': (4, 3, 0),
     'category': 'System',
     'doc_url': "https://github.com/L0Lock/Autokey-Highlight",
@@ -15,7 +15,6 @@ bl_info = {
 }
 
 draw_handle = None
-
 
 def draw_callback_px():
     """Draws a border around the 3D viewport based on user preferences."""
@@ -27,19 +26,17 @@ def draw_callback_px():
     gpu.state.line_width_set(border_width)
     gpu.state.blend_set('ALPHA')
 
-    # Get viewport dimensions
-    width, height = bpy.context.region.width, bpy.context.region.height
+    redion_width, redion_height = bpy.context.region.width, bpy.context.region.height
 
-    # Define border positions
-    positions = [
+    border_coordinates = [
         (0, 0),
-        (width, 0),
-        (width, height),
-        (0, height),
+        (redion_width, 0),
+        (redion_width, redion_height),
+        (0, redion_height),
         (0, 0),
     ]
 
-    batch = batch_for_shader(shader, 'LINE_STRIP', {"pos": positions})
+    batch = batch_for_shader(shader, 'LINE_STRIP', {"pos": border_coordinates})
     shader.uniform_float("color", border_color)
     batch.draw(shader)
 
@@ -75,7 +72,7 @@ class AutokeyBorderPreferences(bpy.types.AddonPreferences):
         description="Color of the border",
         subtype='COLOR',
         size=4,
-        default=(1.0, 0.1, 0.1, 1.0),  # Default red color
+        default=(1.0, 0.1, 0.1, 1.0),  
         min=0.0, max=1.0,
     )
     border_width: bpy.props.IntProperty(
@@ -105,7 +102,7 @@ def register():
     bpy.utils.register_class(AutokeyBorderPreferences)
     bpy.app.handlers.depsgraph_update_post.append(monitor_autokey)
 
-    # Use a timer to safely defer the initialization
+    # Using a timer to defer the initialization, otherwise register fails
     bpy.app.timers.register(init_toggle_border)
 
 
