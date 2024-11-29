@@ -11,10 +11,6 @@
 
 Toggles a border in the viewport based on autokey state, with customizable color and width.
 
-
-
-![feature prez](Prez/feature.jpg)
-
 ![animated prez](Prez/demoAnimation.webp)
 
 ![preferences prez](Prez/prefs.jpg)
