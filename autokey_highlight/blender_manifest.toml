@@ -1,6 +1,6 @@
 schema_version = "1.0.0"
 id = "autokey_highlight"
-version = "1.0.1"
+version = "1.0.2"
 name = "Autokey Highlight"
 tagline = "Highlights the viewport when autokey is enabled"
 maintainer = "Loïc \"Lauloque\" Dautry"
