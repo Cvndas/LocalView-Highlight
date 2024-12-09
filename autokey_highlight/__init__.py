@@ -18,7 +18,7 @@ draw_handle = None
 
 def draw_callback_px():
     """Draws a border around the 3D viewport based on user preferences."""
-    preferences = bpy.context.preferences.addons[__name__].preferences
+    preferences = bpy.context.preferences.addons[__package__].preferences
     border_color = preferences.border_color
     border_width = preferences.border_width
 
@@ -65,7 +65,7 @@ def monitor_autokey(dummy):
 
 class AutokeyBorderPreferences(bpy.types.AddonPreferences):
     """Preferences for the Autokey Border Highlight addon."""
-    bl_idname = __name__
+    bl_idname = __package__
 
     border_color: bpy.props.FloatVectorProperty(
         name="Border Color",
@@ -116,5 +116,5 @@ def unregister():
         bpy.types.SpaceView3D.draw_handler_remove(draw_handle, 'WINDOW')
         draw_handle = None
 
-if __name__ == "__main__":
+if __package__ == "__main__":
     register()
