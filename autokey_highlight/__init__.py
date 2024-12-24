@@ -99,10 +99,18 @@ class AutokeyBorderPreferences(bpy.types.AddonPreferences):
         layout.prop(self, "border_color")
         layout.prop(self, "border_width")
 
+def init_toggle_border():
+    """Initialize the toggle_border logic safely."""
+    if bpy.context.scene:  # Ensure the scene is available
+        toggle_border()
+    return None  # Stop the timer after execution
 
 def register():
     bpy.utils.register_class(AutokeyBorderPreferences)
     subscribe_to_autokey()
+
+    # Using a timer to defer the initialization, otherwise register fails
+    bpy.app.timers.register(init_toggle_border)
 
 def unregister():
     global draw_handle
