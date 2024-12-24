@@ -16,7 +16,6 @@ bl_info = {
 
 draw_handle = None
 msgbus_owner = object()
-# msgbus_key = bpy.context.scene.tool_settings.use_keyframe_insert_auto
 
 def draw_callback_px():
     """Draws a border around the 3D viewport based on user preferences."""
@@ -101,21 +100,9 @@ class AutokeyBorderPreferences(bpy.types.AddonPreferences):
         layout.prop(self, "border_width")
 
 
-# def init_toggle_border():
-#     """Initialize the toggle_border logic safely."""
-#     if bpy.context.scene:  # Ensure the scene is available
-#         toggle_border()
-#     return None  # Stop the timer after execution
-
-
 def register():
     bpy.utils.register_class(AutokeyBorderPreferences)
-    # bpy.app.handlers.depsgraph_update_post.append(monitor_autokey)
     subscribe_to_autokey()
-
-    # Using a timer to defer the initialization, otherwise register fails
-    # bpy.app.timers.register(init_toggle_border)
-
 
 def unregister():
     global draw_handle
@@ -123,7 +110,6 @@ def unregister():
     unsubscribe_from_autokey()
 
     bpy.utils.unregister_class(AutokeyBorderPreferences)
-    # bpy.app.handlers.depsgraph_update_post.remove(monitor_autokey)
 
     if draw_handle is not None:
         bpy.types.SpaceView3D.draw_handler_remove(draw_handle, 'WINDOW')
