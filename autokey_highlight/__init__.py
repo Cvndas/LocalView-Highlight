@@ -103,9 +103,6 @@ class AutokeyBorderPreferences(bpy.types.AddonPreferences):
 def register():
     bpy.utils.register_class(AutokeyBorderPreferences)
     subscribe_to_autokey()
-    # Makes sure the border appears 
-    # if autokey is already on:
-    toggle_border()
 
 def unregister():
     global draw_handle
