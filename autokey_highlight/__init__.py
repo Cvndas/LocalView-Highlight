@@ -103,17 +103,20 @@ class AutokeyBorderPreferences(bpy.types.AddonPreferences):
 def register():
     bpy.utils.register_class(AutokeyBorderPreferences)
     subscribe_to_autokey()
+    # Makes sure the border appears 
+    # if autokey is already on:
+    toggle_border()
 
 def unregister():
     global draw_handle
 
     unsubscribe_from_autokey()
 
-    bpy.utils.unregister_class(AutokeyBorderPreferences)
-
     if draw_handle is not None:
         bpy.types.SpaceView3D.draw_handler_remove(draw_handle, 'WINDOW')
         draw_handle = None
+
+    bpy.utils.unregister_class(AutokeyBorderPreferences)
 
 if __package__ == "__main__":
     register()
