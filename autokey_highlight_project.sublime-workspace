@@ -39,7 +39,7 @@
 			"file": "autokey_highlight/__init__.py",
 			"settings":
 			{
-				"buffer_size": 3594,
+				"buffer_size": 3838,
 				"encoding": "UTF-8",
 				"line_ending": "Windows"
 			},
@@ -798,6 +798,96 @@
 					},
 					"AQAAAMEMAAAAAAAAwwwAAAAAAAAAAAAA",
 					"AQAAAAAAAAABAAAA0AwAAAAAAADQDAAAAAAAAAAAAAAAAPC/"
+				],
+				[
+					659,
+					1,
+					"revert",
+					null,
+					"AgAAAAAAAAAAAAAAAAAAAAAAAAALDgAAaW1wb3J0IGJweQppbXBvcnQgZ3B1CmZyb20gZ3B1X2V4dHJhcy5iYXRjaCBpbXBvcnQgYmF0Y2hfZm9yX3NoYWRlcgoKYmxfaW5mbyA9IHsKICAgICduYW1lJzogJ0F1dG9rZXkgSGlnaGxpZ2h0JywKICAgICdhdXRob3InOiAnTG/Dr2MgXCJMYXVsb3F1ZVwiIERhdXRyeScsCiAgICAnZGVzY3JpcHRpb24nOiAiVG9nZ2xlcyBhIGJvcmRlciBpbiB0aGUgdmlld3BvcnQgYmFzZWQgb24gYXV0b2tleSBzdGF0ZSwgd2l0aCBjdXN0b21pemFibGUgY29sb3IgYW5kIHdpZHRoIiwKICAgICd2ZXJzaW9uJzogKDEsIDAsIDIpLAogICAgJ2JsZW5kZXInOiAoNCwgMywgMCksCiAgICAnY2F0ZWdvcnknOiAnU3lzdGVtJywKICAgICdkb2NfdXJsJzogImh0dHBzOi8vZ2l0aHViLmNvbS9MMExvY2svQXV0b2tleS1IaWdobGlnaHQiLAogICAgJ3N1cHBvcnQnOiAnQ09NTVVOSVRZJywKICAgICd0cmFja2VyX3VybCc6ICJodHRwczovL2dpdGh1Yi5jb20vTDBMb2NrL0F1dG9rZXktSGlnaGxpZ2h0L2lzc3VlcyIsCn0KCmRyYXdfaGFuZGxlID0gTm9uZQptc2didXNfb3duZXIgPSBvYmplY3QoKQoKZGVmIGRyYXdfY2FsbGJhY2tfcHgoKToKICAgICIiIkRyYXdzIGEgYm9yZGVyIGFyb3VuZCB0aGUgM0Qgdmlld3BvcnQgYmFzZWQgb24gdXNlciBwcmVmZXJlbmNlcy4iIiIKICAgIHByZWZlcmVuY2VzID0gYnB5LmNvbnRleHQucHJlZmVyZW5jZXMuYWRkb25zW19fcGFja2FnZV9fXS5wcmVmZXJlbmNlcwogICAgYm9yZGVyX2NvbG9yID0gcHJlZmVyZW5jZXMuYm9yZGVyX2NvbG9yCiAgICBib3JkZXJfd2lkdGggPSBwcmVmZXJlbmNlcy5ib3JkZXJfd2lkdGgKCiAgICBzaGFkZXIgPSBncHUuc2hhZGVyLmZyb21fYnVpbHRpbignVU5JRk9STV9DT0xPUicpCiAgICBncHUuc3RhdGUubGluZV93aWR0aF9zZXQoYm9yZGVyX3dpZHRoKQogICAgZ3B1LnN0YXRlLmJsZW5kX3NldCgnQUxQSEEnKQoKICAgIHJlZGlvbl93aWR0aCwgcmVkaW9uX2hlaWdodCA9IGJweS5jb250ZXh0LnJlZ2lvbi53aWR0aCwgYnB5LmNvbnRleHQucmVnaW9uLmhlaWdodAoKICAgIGJvcmRlcl9jb29yZGluYXRlcyA9IFsKICAgICAgICAoMCwgMCksCiAgICAgICAgKHJlZGlvbl93aWR0aCwgMCksCiAgICAgICAgKHJlZGlvbl93aWR0aCwgcmVkaW9uX2hlaWdodCksCiAgICAgICAgKDAsIHJlZGlvbl9oZWlnaHQpLAogICAgICAgICgwLCAwKSwKICAgIF0KCiAgICBiYXRjaCA9IGJhdGNoX2Zvcl9zaGFkZXIoc2hhZGVyLCAnTElORV9TVFJJUCcsIHsicG9zIjogYm9yZGVyX2Nvb3JkaW5hdGVzfSkKICAgIHNoYWRlci51bmlmb3JtX2Zsb2F0KCJjb2xvciIsIGJvcmRlcl9jb2xvcikKICAgIGJhdGNoLmRyYXcoc2hhZGVyKQoKICAgIGdwdS5zdGF0ZS5saW5lX3dpZHRoX3NldCgxLjApCiAgICBncHUuc3RhdGUuYmxlbmRfc2V0KCdOT05FJykKCgpkZWYgdG9nZ2xlX2JvcmRlcigpOgogICAgIiIiVG9nZ2xlIHRoZSBib3JkZXIgYmFzZWQgb24gdGhlIGF1dG9rZXkgc3RhdGUuIiIiCiAgICBnbG9iYWwgZHJhd19oYW5kbGUKCiAgICBhdXRva2V5X2VuYWJsZWQgPSBicHkuY29udGV4dC5zY2VuZS50b29sX3NldHRpbmdzLnVzZV9rZXlmcmFtZV9pbnNlcnRfYXV0bwoKICAgIGlmIGF1dG9rZXlfZW5hYmxlZCBhbmQgZHJhd19oYW5kbGUgaXMgTm9uZToKICAgICAgICBkcmF3X2hhbmRsZSA9IGJweS50eXBlcy5TcGFjZVZpZXczRC5kcmF3X2hhbmRsZXJfYWRkKGRyYXdfY2FsbGJhY2tfcHgsICgpLCAnV0lORE9XJywgJ1BPU1RfUElYRUwnKQogICAgZWxpZiBub3QgYXV0b2tleV9lbmFibGVkIGFuZCBkcmF3X2hhbmRsZSBpcyBub3QgTm9uZToKICAgICAgICBicHkudHlwZXMuU3BhY2VWaWV3M0QuZHJhd19oYW5kbGVyX3JlbW92ZShkcmF3X2hhbmRsZSwgJ1dJTkRPVycpCiAgICAgICAgZHJhd19oYW5kbGUgPSBOb25lCgoKZGVmIHN1YnNjcmliZV90b19hdXRva2V5KCk6CiAgICAiIiJTdWJzY3JpYmUgdG8gY2hhbmdlcyBpbiB0aGUgYXV0b2tleSBwcm9wZXJ0eS4iIiIKICAgIGJweS5tc2didXMuc3Vic2NyaWJlX3JuYSgKICAgICAgICBrZXk9KGJweS50eXBlcy5Ub29sU2V0dGluZ3MsICJ1c2Vfa2V5ZnJhbWVfaW5zZXJ0X2F1dG8iKSwKICAgICAgICBvd25lcj1tc2didXNfb3duZXIsCiAgICAgICAgYXJncz0oKSwKICAgICAgICBub3RpZnk9dG9nZ2xlX2JvcmRlciwKICAgICkKCmRlZiB1bnN1YnNjcmliZV9mcm9tX2F1dG9rZXkoKToKICAgICIiIlVuc3Vic2NyaWJlIGZyb20gY2hhbmdlcyBpbiB0aGUgYXV0b2tleSBwcm9wZXJ0eS4iIiIKICAgIGJweS5tc2didXMuY2xlYXJfYnlfb3duZXIobXNnYnVzX293bmVyKQoKCmNsYXNzIEF1dG9rZXlCb3JkZXJQcmVmZXJlbmNlcyhicHkudHlwZXMuQWRkb25QcmVmZXJlbmNlcyk6CiAgICAiIiJQcmVmZXJlbmNlcyBmb3IgdGhlIEF1dG9rZXkgQm9yZGVyIEhpZ2hsaWdodCBhZGRvbi4iIiIKICAgIGJsX2lkbmFtZSA9IF9fcGFja2FnZV9fCgogICAgYm9yZGVyX2NvbG9yOiBicHkucHJvcHMuRmxvYXRWZWN0b3JQcm9wZXJ0eSgKICAgICAgICBuYW1lPSJCb3JkZXIgQ29sb3IiLAogICAgICAgIGRlc2NyaXB0aW9uPSJDb2xvciBvZiB0aGUgYm9yZGVyIiwKICAgICAgICBzdWJ0eXBlPSdDT0xPUicsCiAgICAgICAgc2l6ZT00LAogICAgICAgIGRlZmF1bHQ9KDEuMCwgMC4xLCAwLjEsIDEuMCksICAKICAgICAgICBtaW49MC4wLCBtYXg9MS4wLAogICAgKQogICAgYm9yZGVyX3dpZHRoOiBicHkucHJvcHMuSW50UHJvcGVydHkoCiAgICAgICAgbmFtZT0iQm9yZGVyIFdpZHRoIiwKICAgICAgICBkZXNjcmlwdGlvbj0iV2lkdGggb2YgdGhlIGJvcmRlciIsCiAgICAgICAgZGVmYXVsdD00LAogICAgICAgIHN1YnR5cGU9J1BJWEVMJywKICAgICAgICBtaW49MSwKICAgICAgICBtYXg9MTAsCiAgICApCgogICAgZGVmIGRyYXcoc2VsZiwgY29udGV4dCk6CiAgICAgICAgbGF5b3V0ID0gc2VsZi5sYXlvdXQKICAgICAgICBsYXlvdXQubGFiZWwodGV4dD0iQ3VzdG9taXplIEJvcmRlciBBcHBlYXJhbmNlIikKICAgICAgICBsYXlvdXQucHJvcChzZWxmLCAiYm9yZGVyX2NvbG9yIikKICAgICAgICBsYXlvdXQucHJvcChzZWxmLCAiYm9yZGVyX3dpZHRoIikKCgpkZWYgcmVnaXN0ZXIoKToKICAgIGJweS51dGlscy5yZWdpc3Rlcl9jbGFzcyhBdXRva2V5Qm9yZGVyUHJlZmVyZW5jZXMpCiAgICBzdWJzY3JpYmVfdG9fYXV0b2tleSgpCiAgICAjIE1ha2VzIHN1cmUgdGhlIGJvcmRlciBhcHBlYXJzIAogICAgIyBpZiBhdXRva2V5IGlzIGFscmVhZHkgb246CiAgICAjIHRvZ2dsZV9ib3JkZXIoKQoKZGVmIHVucmVnaXN0ZXIoKToKICAgIGdsb2JhbCBkcmF3X2hhbmRsZQoKICAgIHVuc3Vic2NyaWJlX2Zyb21fYXV0b2tleSgpCgogICAgaWYgZHJhd19oYW5kbGUgaXMgbm90IE5vbmU6CiAgICAgICAgYnB5LnR5cGVzLlNwYWNlVmlldzNELmRyYXdfaGFuZGxlcl9yZW1vdmUoZHJhd19oYW5kbGUsICdXSU5ET1cnKQogICAgICAgIGRyYXdfaGFuZGxlID0gTm9uZQoKICAgIGJweS51dGlscy51bnJlZ2lzdGVyX2NsYXNzKEF1dG9rZXlCb3JkZXJQcmVmZXJlbmNlcykKCmlmIF9fcGFja2FnZV9fID09ICJfX21haW5fXyI6CiAgICByZWdpc3RlcigpCgAAAAAAAAAACA4AAAAAAAAAAAAA",
+					"AQAAAAAAAAABAAAAHQ0AAAAAAAAdDQAAAAAAAAAAAAAAAPC/"
+				],
+				[
+					699,
+					1,
+					"insert",
+					{
+						"characters": "\n"
+					},
+					"AgAAALwMAAAAAAAAvQwAAAAAAAAAAAAAvQwAAAAAAADBDAAAAAAAAAAAAAA",
+					"AQAAAAAAAAABAAAAvAwAAAAAAAC8DAAAAAAAAAAAAAAAAPC/"
+				],
+				[
+					702,
+					1,
+					"paste",
+					null,
+					"AQAAAMEMAAAAAAAAOA0AAAAAAAAAAAAA",
+					"AQAAAAAAAAABAAAAwQwAAAAAAADBDAAAAAAAAAAAAAAAAPC/"
+				],
+				[
+					715,
+					1,
+					"insert",
+					{
+						"characters": "\n"
+					},
+					"AQAAABQMAAAAAAAAFQwAAAAAAAAAAAAA",
+					"AQAAAAAAAAABAAAAFAwAAAAAAAAUDAAAAAAAAAAAAAAAAPC/"
+				],
+				[
+					717,
+					1,
+					"paste",
+					null,
+					"AQAAABUMAAAAAAAA8AwAAAAAAAAAAAAA",
+					"AQAAAAAAAAABAAAAFQwAAAAAAAAVDAAAAAAAAAAAAAAAAPC/"
+				],
+				[
+					726,
+					1,
+					"toggle_comment",
+					{
+						"block": false
+					},
+					"AwAAAL0MAAAAAAAAvQwAAAAAAAACAAAAIyCjDAAAAAAAAKMMAAAAAAAAAgAAACMgZgwAAAAAAABmDAAAAAAAAAIAAAAjIA",
+					"AQAAAAAAAAABAAAA8QwAAAAAAACeDAAAAAAAAAAAAAAAAPC/"
+				],
+				[
+					736,
+					1,
+					"left_delete",
+					null,
+					"AQAAAA4OAAAAAAAADg4AAAAAAAAUAAAACiAgICB0b2dnbGVfYm9yZGVyKCk",
+					"AQAAAAAAAAABAAAAIg4AAAAAAAAODgAAAAAAAAAAAAAAAPC/"
+				],
+				[
+					747,
+					1,
+					"left_delete",
+					null,
+					"AQAAAE4NAAAAAAAATg0AAAAAAABEAAAAICAgICMgTWFrZXMgc3VyZSB0aGUgYm9yZGVyIGFwcGVhcnMgCiAgICAjIGlmIGF1dG9rZXkgaXMgYWxyZWFkeSBvbjo",
+					"AQAAAAAAAAABAAAAkg0AAAAAAABODQAAAAAAAAAAAAAAAPC/"
+				],
+				[
+					752,
+					1,
+					"toggle_comment",
+					{
+						"block": false
+					},
+					"AQAAAJ0NAAAAAAAAnQ0AAAAAAAACAAAAIyA",
+					"AQAAAAAAAAABAAAAqw0AAAAAAACrDQAAAAAAAAAAAAAAAPC/"
+				],
+				[
+					760,
+					1,
+					"toggle_comment",
+					{
+						"block": false
+					},
+					"AQAAAC8MAAAAAAAALwwAAAAAAAACAAAAIyA",
+					"AQAAAAAAAAABAAAASwwAAAAAAABLDAAAAAAAAAAAAAAAAPC/"
 				]
 			]
 		},
@@ -1287,15 +1377,15 @@
 					"semi_transient": false,
 					"settings":
 					{
-						"buffer_size": 3594,
+						"buffer_size": 3838,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								3357,
-								3357
+								3145,
+								3145
 							]
 						],
 						"settings":
@@ -1305,7 +1395,7 @@
 							"origPos":
 							[
 								0.0,
-								1800.0
+								2025.0
 							],
 							"syncScroll": true,
 							"syntax": "Packages/Python/Python.sublime-syntax",
@@ -1313,7 +1403,7 @@
 							"translate_tabs_to_spaces": true
 						},
 						"translation.x": 0.0,
-						"translation.y": 1800.0,
+						"translation.y": 2025.0,
 						"zoom_level": 1.0
 					},
 					"stack_index": 0,
@@ -1422,7 +1512,7 @@
 							"origPos":
 							[
 								0.0,
-								1050.0
+								1275.0
 							],
 							"syncScroll": true,
 							"syntax": "Packages/Python/Python.sublime-syntax",
@@ -1430,7 +1520,7 @@
 							"translate_tabs_to_spaces": true
 						},
 						"translation.x": 0.0,
-						"translation.y": 1050.0,
+						"translation.y": 1275.0,
 						"zoom_level": 1.0
 					},
 					"stack_index": 0,
