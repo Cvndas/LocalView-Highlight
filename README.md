@@ -17,7 +17,11 @@ Toggles a border in the viewport based on autokey state, with customizable color
 
 ## Installation
 
-You can download the extension either from Blender's GUI, or from [its Blender Extension webpage](https://extensions.blender.org/add-ons/autokey-highlight/), or from [this repository's releases page](https://github.com/L0Lock/Autokey-Highlight/releases).
+You can download the extension either from:
+
+- Blender's GUI (Preferences > Get Extensions)
+- The [Blender Extension Platform](https://extensions.blender.org/add-ons/autokey-highlight/)
+- [This repository's releases page](https://github.com/L0Lock/Autokey-Highlight/releases).
 
 The installation process is well explained by Blender's official extensions platform documentation:
 
