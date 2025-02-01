@@ -1,6 +1,7 @@
 import bpy
 import gpu
 from gpu_extras.batch import batch_for_shader
+from bpy.app.handlers import persistent
 
 bl_info = {
     'name': 'Autokey Highlight',
@@ -65,11 +66,19 @@ def subscribe_to_autokey():
         owner=msgbus_owner,
         args=(),
         notify=toggle_border,
+        options={"PERSISTENT",}
     )
 
 def unsubscribe_from_autokey():
     """Unsubscribe from changes in the autokey property."""
     bpy.msgbus.clear_by_owner(msgbus_owner)
+
+
+# Handles subscription on new loads
+# https://docs.blender.org/api/current/bpy.app.handlers.html#persistent-handler-example
+@persistent
+def persistent_load_handler(dummy):
+    subscribe_to_autokey()
 
 
 class AutokeyBorderPreferences(bpy.types.AddonPreferences):
@@ -107,6 +116,8 @@ def init_toggle_border():
 
 def register():
     bpy.utils.register_class(AutokeyBorderPreferences)
+
+    bpy.app.handlers.load_post.append(persistent_load_handler)
     subscribe_to_autokey()
 
     # Using a timer to defer the initialization, otherwise register fails
