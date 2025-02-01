@@ -79,6 +79,7 @@ def unsubscribe_from_autokey():
 @persistent
 def persistent_load_handler(dummy):
     subscribe_to_autokey()
+    init_toggle_border()
 
 
 class AutokeyBorderPreferences(bpy.types.AddonPreferences):
@@ -120,8 +121,6 @@ def register():
     bpy.app.handlers.load_post.append(persistent_load_handler)
     subscribe_to_autokey()
 
-    # Using a timer to defer the initialization, otherwise register fails
-    bpy.app.timers.register(init_toggle_border)
 
 def unregister():
     global draw_handle
