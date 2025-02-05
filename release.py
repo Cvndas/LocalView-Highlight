@@ -5,7 +5,7 @@ import ast
 import subprocess
 
 extension_folder = 'autokey_highlight'
-path_to_blender = 'C:\\AppInstall\\Blender\\stable\\blender-4.3.0-stable.2b18cad88b13\\blender.exe'
+path_to_blender = 'C:\\AppInstall\\Blender\\stable\\blender-4.3.2-stable.32f5fdce0a0a\\blender.exe'
 
 def get_base_path():
     return os.path.dirname(os.path.abspath(__file__))
@@ -76,6 +76,16 @@ def create_zip(base_path, version):
 
 def main():
     base_path = get_base_path()
+
+    if not os.path.isfile(path_to_blender):
+        print(f"Error: Blender Executable not found in:\n    `{path_to_blender}`")
+        return
+    elif not os.path.isfile(f"{base_path}\\{extension_folder}"):
+        print(f"Error: Extension not found in:\n    `{base_path}\\{extension_folder}`")
+        return
+    else:
+        print(f"Found Blender Executable and Extension. Proceeding!")
+
     try:
         version_init = read_version_init(base_path)
         version_toml = read_version_toml(base_path)
