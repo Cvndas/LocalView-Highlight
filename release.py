@@ -8,6 +8,19 @@ import argparse
 extension_folder = 'autokey_highlight'
 path_to_blender = 'C:\\AppInstall\\Blender\\stable\\blender-4.3.2-stable.32f5fdce0a0a\\blender.exe'
 
+class col:
+    Purple = '\033[95m'
+    Blue = '\033[94m'
+    Cyan = '\033[96m'
+    Green = '\033[92m'
+    Tan = '\033[93m'
+    Red = '\033[91m'
+    Grey = '\033[0m'  # Default
+    White = '\033[1m'
+    Sound = '\007'
+
+def printcol(color, text):
+    print(f'{color}{text}{col.Grey}')
 
 def get_base_path():
     return os.path.dirname(os.path.abspath(__file__))
@@ -117,7 +130,7 @@ def create_zip(base_path, version, source_folder):
     command += f'--source-dir "{base_path}\\{source_folder}" '
     command += f'--output-filepath "{base_path}\\Releases\\{output_name}"'
     subprocess.call(command)
-    print(f"Release zip created: {output_name}")
+    printcol(col.Green, f"Release zip created: {output_name}")
 
 
 def main():
@@ -128,13 +141,13 @@ def main():
     base_path = get_base_path()
 
     if not os.path.isfile(path_to_blender):
-        print(f"Error: Blender Executable not found in:\n    `{path_to_blender}`")
+        printcol(col.Red, f"Error: Blender Executable not found in:\n    `{path_to_blender}`")
         return
     elif not os.path.isdir(os.path.join(base_path, extension_folder)):
-        print(f"Error: Extension not found in:\n    `{base_path}\\{extension_folder}`")
+        printcol(col.Red, f"Error: Extension not found in:\n    `{base_path}\\{extension_folder}`")
         return
     else:
-        print(f"Found Blender Executable and Extension. Proceeding!")
+        printcol(col.Cyan, f"Found Blender Executable and Extension. Proceeding!")
 
     version_init = read_version_init(base_path)
     version_toml = read_version_toml(base_path)
@@ -142,7 +155,7 @@ def main():
 
     # If init.py and toml versions don't match, ask the user to manually enter a version
     if version_init != version_toml:
-        print(f"Version mismatch detected:    init: {version_init}    toml: {version_toml}")
+        printcol(col.Cyan, f"Version mismatch detected:    init: {version_init}    toml: {version_toml}")
         new_version = input("Enter new version (X.Y.Z) or press Enter to keep the current version: ").strip()
         if new_version:
             try:
@@ -151,7 +164,7 @@ def main():
                     raise ValueError
                 print(f"Using manually entered version: {version_tuple}")
             except ValueError:
-                print("Invalid version format. Aborting.")
+                printcol(col.Red, "Invalid version format. Aborting.")
                 return
         else:
             version_tuple = version_init  # Keep the existing version
@@ -161,7 +174,7 @@ def main():
 
     # If latest ZIP matches the current version, ask whether to overwrite or increment
     if not args.dev and latest_zip_version == version_tuple:
-        print(f"A release with version {latest_zip_version} already exists.")
+        printcol(col.Cyan, f"A release with version {latest_zip_version} already exists.")
         while True:
             response = input("Do you want to (O)verwrite, (I)ncrement version, or (C)ancel? (O/I/C): ").strip().lower()
             if response == 'o':
@@ -175,12 +188,12 @@ def main():
                     update_version_files(base_path, version_tuple)  # ✅ Now we update the files
                     break
                 except ValueError:
-                    print("Invalid version format. Try again.")
+                    printcol(col.Red, "Invalid version format. Try again.")
             elif response == 'c':
-                print("Operation canceled.")
+                printcol(col.Red, "Operation canceled.")
                 return
             else:
-                print("Invalid input. Please enter O, I, or C.")
+                printcol(col.Red, "Invalid input. Please enter O, I, or C.")
 
     source_folder = create_dev_copy(base_path) if args.dev else extension_folder
     create_zip(base_path, version_tuple, source_folder)
