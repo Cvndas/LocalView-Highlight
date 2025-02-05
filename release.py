@@ -1,14 +1,17 @@
 import os
 import zipfile
 import re
-import ast
+import shutil
 import subprocess
+import argparse
 
 extension_folder = 'autokey_highlight'
 path_to_blender = 'C:\\AppInstall\\Blender\\stable\\blender-4.3.2-stable.32f5fdce0a0a\\blender.exe'
 
+
 def get_base_path():
     return os.path.dirname(os.path.abspath(__file__))
+
 
 def read_version_init(base_path):
     init_path = os.path.join(base_path, extension_folder, '__init__.py')
@@ -16,12 +19,11 @@ def read_version_init(base_path):
         raise FileNotFoundError(f"File not found: {init_path}")
     with open(init_path, 'r') as file:
         content = file.read()
-    print("Content of __init__.py:", content)  # Debugging line
-    # Extract the version from the bl_info dictionary
     match = re.search(r'[\'"]version[\'"]\s*:\s*\((\d+),\s*(\d+),\s*(\d+)\)', content)
     if match:
         return tuple(map(int, match.groups()))
     raise ValueError("Version not found in __init__.py")
+
 
 def read_version_toml(base_path):
     toml_path = os.path.join(base_path, extension_folder, 'blender_manifest.toml')
@@ -29,58 +31,66 @@ def read_version_toml(base_path):
         raise FileNotFoundError(f"File not found: {toml_path}")
     with open(toml_path, 'r') as file:
         content = file.read()
-    print("Content of blender_manifest.toml:", content)  # Debugging line
     match = re.search(r'^version\s*=\s*"(\d+)\.(\d+)\.(\d+)"', content, re.MULTILINE)
     if match:
         return tuple(map(int, match.groups()))
     raise ValueError("Version not found in blender_manifest.toml")
 
-def normalize_version(version):
-    return tuple(int(part) for part in version)
 
-def update_version_init(base_path, version):
-    version_str = f'\"version\": ({version[0]}, {version[1]}, {version[2]})'
-    init_path = os.path.join(base_path, extension_folder, '__init__.py')
+def create_dev_copy(base_path):
+    """ Creates a '_dev' copy of the extension and updates metadata. """
+    dev_folder = extension_folder + "_dev"
+    dev_path = os.path.join(base_path, dev_folder)
+
+    if os.path.exists(dev_path):
+        shutil.rmtree(dev_path)
+    shutil.copytree(os.path.join(base_path, extension_folder), dev_path)
+
+    # Modify __init__.py
+    init_path = os.path.join(dev_path, '__init__.py')
     with open(init_path, 'r') as file:
         content = file.read()
-    content = re.sub(r'\"version\"\s*:\s*\(\d+, \d+, \d+\)', version_str, content)
+    content = re.sub(r'("name"\s*:\s*)"([^"]+)"', r'\1"\2_dev"', content)
+    content = re.sub(r'("id"\s*:\s*)"([^"]+)"', r'\1"\2_dev"', content)
     with open(init_path, 'w') as file:
         file.write(content)
 
-def update_version_toml(base_path, version):
-    version_str = f'version = "{version[0]}.{version[1]}.{version[2]}"'
-    toml_path = os.path.join(base_path, extension_folder, 'blender_manifest.toml')
+    # Modify blender_manifest.toml
+    toml_path = os.path.join(dev_path, 'blender_manifest.toml')
     with open(toml_path, 'r') as file:
         content = file.read()
-    content = re.sub(r'^version\s*=\s*"\d+\.\d+\.\d+"', version_str, content, flags=re.MULTILINE)
+    content = re.sub(r'^(name\s*=\s*)"([^"]+)"', r'\1"\2_dev"', content, flags=re.MULTILINE)
+    content = re.sub(r'^(id\s*=\s*)"([^"]+)"', r'\1"\2_dev"', content, flags=re.MULTILINE)
     with open(toml_path, 'w') as file:
         file.write(content)
 
-def create_zip(base_path, version):
-    # zip_filename = os.path.join(base_path, 'Releases', f'convert_Rotation_Mode_v{version[0]}-{version[1]}-{version[2]}.zip')
-    # os.makedirs(os.path.dirname(zip_filename), exist_ok=True)
-    # with zipfile.ZipFile(zip_filename, 'w') as zipf:
-    #     for root, dirs, files in os.walk(os.path.join(base_path, extension_folder)):
-    #         for file in files:
-    #             file_path = os.path.join(root, file)
-    #             arcname = os.path.relpath(file_path, os.path.join(base_path, extension_folder))
-    #             zipf.write(file_path, arcname)
+    return dev_folder
 
+
+def create_zip(base_path, version, source_folder):
+    """ Builds the extension using Blender's `--command extension build` tool. """
     if not os.path.exists(f'{base_path}\\Releases'):
         os.mkdir(f'{base_path}\\Releases')
 
+    output_name = f'extension_{source_folder}_v{version[0]}-{version[1]}-{version[2]}.zip'
     command = f'{path_to_blender} --factory-startup --command extension build '
-    command += f'--source-dir "{base_path}\\{extension_folder}" '
-    command += f'--output-filepath "{base_path}\\Releases\\extension_{extension_folder}_v{version[0]}-{version[1]}-{version[2]}.zip"'
+    command += f'--source-dir "{base_path}\\{source_folder}" '
+    command += f'--output-filepath "{base_path}\\Releases\\{output_name}"'
     subprocess.call(command)
+    print(f"Release zip created: {output_name}")
+
 
 def main():
+    parser = argparse.ArgumentParser(description="Blender Extension Release Script")
+    parser.add_argument("--dev", action="store_true", help="Create a development build with '_dev' suffix.")
+    args = parser.parse_args()
+
     base_path = get_base_path()
 
     if not os.path.isfile(path_to_blender):
         print(f"Error: Blender Executable not found in:\n    `{path_to_blender}`")
         return
-    elif not os.path.isfile(f"{base_path}\\{extension_folder}"):
+    elif not os.path.isdir(os.path.join(base_path, extension_folder)):
         print(f"Error: Extension not found in:\n    `{base_path}\\{extension_folder}`")
         return
     else:
@@ -93,7 +103,7 @@ def main():
         print(f"Error: {e}")
         return
 
-    if normalize_version(version_init) != normalize_version(version_toml):
+    if version_init != version_toml:
         print("Version mismatch detected.")
         new_version = input("Enter new version (X.Y.Z): ")
         try:
@@ -103,14 +113,16 @@ def main():
         except ValueError:
             print("Invalid version format.")
             return
-        
-        update_version_init(base_path, version_tuple)
-        update_version_toml(base_path, version_tuple)
     else:
         version_tuple = version_init
-    
-    create_zip(base_path, version_tuple)
-    print(f"Release zip created: extension_{extension_folder}_v{version_tuple[0]}-{version_tuple[1]}-{version_tuple[2]}.zip")
+
+    source_folder = extension_folder
+    if args.dev:
+        print("Creating development build...")
+        source_folder = create_dev_copy(base_path)
+
+    create_zip(base_path, version_tuple, source_folder)
+
 
 if __name__ == '__main__':
     main()
