@@ -122,7 +122,7 @@ def create_zip(base_path, version, source_folder):
     command += f'--source-dir "{base_path}\\{source_folder}" '
     command += f'--output-filepath "{base_path}\\Releases\\{output_name}"'
     subprocess.call(command)
-    printcol(col.Green, f"Release zip created: {output_name}")
+    printcol(Green, f"Release zip created: {output_name}")
 
 
 def main():
@@ -133,13 +133,13 @@ def main():
     base_path = get_base_path()
 
     if not os.path.isfile(path_to_blender):
-        printcol(col.Red, f"Error: Blender Executable not found in:\n    `{path_to_blender}`")
+        printcol(Red, f"Error: Blender Executable not found in:\n    `{path_to_blender}`")
         return
     elif not os.path.isdir(os.path.join(base_path, extension_folder)):
-        printcol(col.Red, f"Error: Extension not found in:\n    `{base_path}\\{extension_folder}`")
+        printcol(Red, f"Error: Extension not found in:\n    `{base_path}\\{extension_folder}`")
         return
     else:
-        printcol(col.Cyan, f"Found Blender Executable and Extension. Proceeding!")
+        printcol(Cyan, f"Found Blender Executable and Extension. Proceeding!")
 
     version_init = read_version_init(base_path)
     version_toml = read_version_toml(base_path)
@@ -157,8 +157,8 @@ def main():
             f"{v[0]}.{v[1]}.{v[2]}{' (current)' if v == version_init else ''}" for v in versions_from_current
         ]
 
-        printcol(col.Orange, f"A release with version {version_init[0]}.{version_init[1]}.{version_init[2]} already exists.")
-        printcol(col.LightYellow, f"Existing versions from current: {', '.join(existing_versions_str)}")
+        printcol(Orange, f"A release with version {version_init[0]}.{version_init[1]}.{version_init[2]} already exists.")
+        printcol(LightYellow, f"Existing versions from current: {', '.join(existing_versions_str)}")
 
         while True:
             response = input("Do you want to (O)verwrite, (I)ncrement version, or (C)ancel? (O/I/C): ").strip().lower()
@@ -174,15 +174,15 @@ def main():
                     version_init = version_tuple  # Update the version_init to the new version
                     break
                 except ValueError:
-                    printcol(col.Orange, "Invalid version format. Try again.")
+                    printcol(Orange, "Invalid version format. Try again.")
             elif response == 'c':
-                printcol(col.LightYellow, "Operation canceled.")
+                printcol(LightYellow, "Operation canceled.")
                 return
             else:
-                printcol(col.Orange, "Invalid input. Please enter O, I, or C.")
+                printcol(Orange, "Invalid input. Please enter O, I, or C.")
 
     elif args.dev:
-        printcol(col.Cyan, "Running in development mode. Overwriting dev zip if exists.")
+        printcol(Cyan, "Running in development mode. Overwriting dev zip if exists.")
     
     source_folder = create_dev_copy(base_path) if args.dev else extension_folder
     create_zip(base_path, version_init, source_folder)
