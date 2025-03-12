@@ -7,7 +7,7 @@ bl_info = {
     'name': 'Autokey Highlight',
     'author': 'Loïc \"Lauloque\" Dautry',
     'description': "Toggles a border in the viewport based on autokey state, with customizable color and width",
-    'version': (1, 0, 4),
+    'version': (1, 0, 5),
     'blender': (4, 3, 0),
     'category': 'System',
     'doc_url': "https://github.com/L0Lock/Autokey-Highlight",
@@ -97,7 +97,7 @@ class AutokeyBorderPreferences(bpy.types.AddonPreferences):
     border_width: bpy.props.IntProperty(
         name="Border Width",
         description="Width of the border",
-        default=4,
+        default=5,
         subtype='PIXEL',
         min=1,
         max=10,
