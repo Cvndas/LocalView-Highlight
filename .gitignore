@@ -1,6 +1,10 @@
 # CUSTOM
 *.sublime-workspace
+*_dev/
+*.sublime*
 Releases/
+*.blend1
+release.toml
 
 # Byte-compiled / optimized / DLL files
 __pycache__/
