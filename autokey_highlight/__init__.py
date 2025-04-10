@@ -20,6 +20,7 @@ bl_info = {
 draw_handle = None
 msgbus_owner = object()
 
+
 def draw_callback_px():
     """Draws a border around the 3D viewport based on user preferences."""
     preferences = bpy.context.preferences.addons[__package__].preferences
@@ -30,7 +31,8 @@ def draw_callback_px():
     gpu.state.line_width_set(border_width)
     gpu.state.blend_set('ALPHA')
 
-    redion_width, redion_height = bpy.context.region.width, bpy.context.region.height
+    redion_width = bpy.context.region.width
+    redion_height = bpy.context.region.height
 
     border_coordinates = [
         (0, 0),
@@ -55,9 +57,17 @@ def toggle_border():
     autokey_enabled = bpy.context.scene.tool_settings.use_keyframe_insert_auto
 
     if autokey_enabled and draw_handle is None:
-        draw_handle = bpy.types.SpaceView3D.draw_handler_add(draw_callback_px, (), 'WINDOW', 'POST_PIXEL')
+        draw_handle = bpy.types.SpaceView3D.draw_handler_add(
+            draw_callback_px,
+            (),
+            'WINDOW',
+            'POST_PIXEL'
+        )
     elif not autokey_enabled and draw_handle is not None:
-        bpy.types.SpaceView3D.draw_handler_remove(draw_handle, 'WINDOW')
+        bpy.types.SpaceView3D.draw_handler_remove(
+            draw_handle,
+            'WINDOW'
+        )
         draw_handle = None
 
 
@@ -68,8 +78,9 @@ def subscribe_to_autokey():
         owner=msgbus_owner,
         args=(),
         notify=toggle_border,
-        options={"PERSISTENT",}
+        options={"PERSISTENT", }
     )
+
 
 def unsubscribe_from_autokey():
     """Unsubscribe from changes in the autokey property."""
@@ -93,7 +104,7 @@ class AutokeyBorderPreferences(bpy.types.AddonPreferences):
         description="Color of the border",
         subtype='COLOR',
         size=4,
-        default=(1.0, 0.1, 0.1, 1.0),  
+        default=(1.0, 0.1, 0.1, 1.0),
         min=0.0, max=1.0,
     )
     border_width: bpy.props.IntProperty(
@@ -111,11 +122,13 @@ class AutokeyBorderPreferences(bpy.types.AddonPreferences):
         layout.prop(self, "border_color")
         layout.prop(self, "border_width")
 
+
 def init_toggle_border():
     """Initialize the toggle_border logic safely."""
     if bpy.context.scene:  # Ensure the scene is available
         toggle_border()
     return None  # Stop the timer after execution
+
 
 def register():
     bpy.utils.register_class(AutokeyBorderPreferences)
@@ -134,6 +147,7 @@ def unregister():
         draw_handle = None
 
     bpy.utils.unregister_class(AutokeyBorderPreferences)
+
 
 if __package__ == "__main__":
     register()
