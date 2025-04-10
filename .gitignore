@@ -5,6 +5,7 @@
 Releases/
 *.blend1
 release.toml
+venv*/
 
 # Byte-compiled / optimized / DLL files
 __pycache__/
