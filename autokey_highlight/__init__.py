@@ -88,15 +88,17 @@ def unsubscribe_from_autokey():
     bpy.msgbus.clear_by_owner(msgbus_owner)
 
 
-# Handles subscription on new loads
-# https://docs.blender.org/api/current/bpy.app.handlers.html#persistent-handler-example
 @persistent
 def persistent_load_handler(dummy):
+    """
+    Handles subscription on new loads
+    https://docs.blender.org/api/current/bpy.app.handlers.html#persistent-handler-example
+    """
     subscribe_to_autokey()
     init_toggle_border()
 
 
-class AutokeyBorderPreferences(bpy.types.AddonPreferences):
+class AutokeyHighlightPreferences(bpy.types.AddonPreferences):
     """Preferences for the Autokey Border Highlight addon."""
     bl_idname = __package__
 
@@ -118,6 +120,7 @@ class AutokeyBorderPreferences(bpy.types.AddonPreferences):
     )
 
     def draw(self, context):
+        """Draws addon's preferences GUI"""
         layout = self.layout
         layout.label(text="Customize Border Appearance")
         layout.prop(self, "border_color")
