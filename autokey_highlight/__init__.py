@@ -5,15 +5,28 @@ import gpu
 from gpu_extras.batch import batch_for_shader
 from bpy.app.handlers import persistent
 from bpy.utils import register_classes_factory
+from mathutils import Color
 
 draw_handle = None
 msgbus_owner = object()
 
 
+def shader_gamma_correction(color):
+    """
+    Gamma-corrects a color from Blender prefs for sRGB shader output.
+    """
+    fixed_color = []
+    for i in range(3):  # R, G, B
+        corrected = pow(color[i], 1.0 / 2.2)
+        fixed_color.append(corrected)
+    fixed_color.append(color[3])  # A stays the same
+    return fixed_color
+
+
 def draw_callback_px():
     """Draws a border around the 3D viewport based on user preferences."""
     preferences = bpy.context.preferences.addons[__package__].preferences
-    color = preferences.border_color
+    color = shader_gamma_correction(preferences.border_color)
     thickness = preferences.border_width + 1  # viewport 'eats' 1px away
 
     region_width = bpy.context.region.width
