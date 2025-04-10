@@ -13,29 +13,48 @@ msgbus_owner = object()
 def draw_callback_px():
     """Draws a border around the 3D viewport based on user preferences."""
     preferences = bpy.context.preferences.addons[__package__].preferences
-    border_color = preferences.border_color
-    border_width = preferences.border_width
+    color = preferences.border_color
+    thickness = preferences.border_width + 1  # viewport 'eats' 1px away
+
+    region_width = bpy.context.region.width
+    region_height = bpy.context.region.height
 
     shader = gpu.shader.from_builtin('UNIFORM_COLOR')
-    gpu.state.line_width_set(border_width)
     gpu.state.blend_set('ALPHA')
 
-    redion_width = bpy.context.region.width
-    redion_height = bpy.context.region.height
+    def draw_rect(x1, y1, x2, y2):
+        coords = [(x1, y1), (x2, y1), (x2, y2), (x1, y2)]
+        batch = batch_for_shader(shader, 'TRI_FAN', {"pos": coords})
+        shader.uniform_float("color", color)
+        batch.draw(shader)
 
-    border_coordinates = [
-        (0, 0),
-        (redion_width, 0),
-        (redion_width, redion_height),
-        (0, redion_height),
-        (0, 0),
-    ]
+    # Top border
+    draw_rect(
+        0,
+        region_height - thickness,
+        region_width,
+        region_height
+    )
+    # Bottom border
+    draw_rect(
+        0, 0,
+        region_width,
+        thickness
+    )
+    # Left border
+    draw_rect(
+        0,
+        thickness,
+        thickness,
+        region_height - thickness
+    )
+    # Right border
+    draw_rect(
+        region_width - thickness,
+        thickness, region_width,
+        region_height - thickness
+    )
 
-    batch = batch_for_shader(shader, 'LINE_STRIP', {"pos": border_coordinates})
-    shader.uniform_float("color", border_color)
-    batch.draw(shader)
-
-    gpu.state.line_width_set(1.0)
     gpu.state.blend_set('NONE')
 
 
@@ -114,7 +133,7 @@ class AutokeyHighlightPreferences(bpy.types.AddonPreferences):
         default=5,
         subtype='PIXEL',
         min=1,
-        max=10,
+        soft_max=10,
     )
 
     def draw(self, context):
