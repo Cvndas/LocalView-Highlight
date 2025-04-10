@@ -6,18 +6,6 @@ from gpu_extras.batch import batch_for_shader
 from bpy.app.handlers import persistent
 from bpy.utils import register_classes_factory
 
-bl_info = {
-    'name': 'Autokey Highlight',
-    'author': 'Loïc \"Lauloque\" Dautry',
-    'description': "Toggles a border in the viewport based on autokey state, with customizable color and width",
-    'version': (1, 0, 5),
-    'blender': (4, 3, 0),
-    'category': 'System',
-    'doc_url': "https://github.com/L0Lock/Autokey-Highlight",
-    'support': 'COMMUNITY',
-    'tracker_url': "https://github.com/L0Lock/Autokey-Highlight/issues",
-}
-
 draw_handle = None
 msgbus_owner = object()
 
