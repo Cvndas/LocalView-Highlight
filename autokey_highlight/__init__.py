@@ -51,6 +51,14 @@ def draw_callback_px():
     gpu.state.blend_set('NONE')
 
 
+def refresh_viewport() -> None:
+    """Refresh the viewport"""
+    for window in bpy.context.window_manager.windows:
+        for area in window.screen.areas:
+            if area.type == 'VIEW_3D':
+                area.tag_redraw()
+
+
 def toggle_border():
     """Toggle the border based on the autokey state."""
     global draw_handle
@@ -70,6 +78,8 @@ def toggle_border():
             'WINDOW'
         )
         draw_handle = None
+
+    refresh_viewport()
 
 
 def subscribe_to_autokey():
