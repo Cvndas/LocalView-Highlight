@@ -131,14 +131,23 @@ def init_toggle_border():
     return None  # Stop the timer after execution
 
 
+Classes = (
+        AutokeyHighlightPreferences
+    )
+
+register_classes, unregister_classes = register_classes_factory(Classes)
+
+
 def register():
-    bpy.utils.register_class(AutokeyBorderPreferences)
+    """Register classes, append handlers, subscribe msgbus"""
+    register_classes()
 
     bpy.app.handlers.load_post.append(persistent_load_handler)
     subscribe_to_autokey()
 
 
 def unregister():
+    """Unsubscribe msgbus, cleanup global, unregister classes"""
     global draw_handle
 
     unsubscribe_from_autokey()
@@ -147,7 +156,7 @@ def unregister():
         bpy.types.SpaceView3D.draw_handler_remove(draw_handle, 'WINDOW')
         draw_handle = None
 
-    bpy.utils.unregister_class(AutokeyBorderPreferences)
+    unregister_classes()
 
 
 if __package__ == "__main__":
