@@ -4,5 +4,17 @@
 		{
 			"path": "."
 		}
-	]
+	],
+    "build_systems": [
+        {
+            "name": "Blender Extension: Release and install a dev build",
+            "shell_cmd": "python \"$project_path/release.py\" -D -I",
+            "working_dir": "$project_path"
+        },
+        {
+            "name": "Blender Extension: Release a final build",
+            "shell_cmd": "python \"$project_path/release.py\"",
+            "working_dir": "$project_path"
+        }
+    ]
 }
