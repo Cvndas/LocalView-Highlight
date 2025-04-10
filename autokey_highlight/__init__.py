@@ -1,9 +1,10 @@
-# SPDX:GPL-3.0-or-later
+# SPDX-License-Identifier: GPL-3.0-or-later
 
 import bpy
 import gpu
 from gpu_extras.batch import batch_for_shader
 from bpy.app.handlers import persistent
+from bpy.utils import register_classes_factory
 
 bl_info = {
     'name': 'Autokey Highlight',
