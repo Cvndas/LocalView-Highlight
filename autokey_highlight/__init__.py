@@ -135,8 +135,8 @@ def init_toggle_border():
 
 
 Classes = (
-        AutokeyHighlightPreferences
-    )
+    AutokeyHighlightPreferences,
+)
 
 register_classes, unregister_classes = register_classes_factory(Classes)
 
