@@ -137,7 +137,7 @@ class AutokeyHighlightPreferences(bpy.types.AddonPreferences):
         description="Color of the border",
         subtype='COLOR',
         size=4,
-        default=(1.0, 0.1, 0.1, 1.0),
+        default=(1.0, 0.05, 0.05, 0.5),
         min=0.0, max=1.0,
     )
     border_width: bpy.props.IntProperty(
