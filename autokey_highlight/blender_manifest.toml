@@ -9,7 +9,7 @@ website = "https://github.com/L0Lock/"
 # Optional list defined by Blender and server, see:
 # https://docs.blender.org/manual/en/dev/advanced/extensions/tags.html
 tags = ["Animation", "3D View", "System"]
-blender_version_min = "4.3.0"
+blender_version_min = "4.2.0"
 # blender_version_max = "5.1.0"
 # License conforming to https://spdx.org/licenses/ (use "SPDX: prefix)
 # https://docs.blender.org/manual/en/dev/advanced/extensions/licenses.html
