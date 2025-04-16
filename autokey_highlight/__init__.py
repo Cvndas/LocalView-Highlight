@@ -1,5 +1,6 @@
 # SPDX-License-Identifier: GPL-3.0-or-later
 
+from typing import Sequence
 import bpy
 import gpu
 from gpu_extras.batch import batch_for_shader
@@ -10,7 +11,7 @@ draw_handle = None
 msgbus_owner = object()
 
 
-def shader_gamma_correction(color):
+def shader_gamma_correction(color: Sequence[float]) -> list[float]:
     """
     Gamma-corrects a color from Blender prefs for sRGB shader output.
     """
@@ -22,7 +23,7 @@ def shader_gamma_correction(color):
     return fixed_color
 
 
-def draw_callback_px():
+def draw_callback_px() -> None:
     """Draws a border around the 3D viewport based on user preferences."""
     preferences = bpy.context.preferences.addons[__package__].preferences
     color = shader_gamma_correction(preferences.border_color)
@@ -78,7 +79,7 @@ def refresh_viewport() -> None:
                 area.tag_redraw()
 
 
-def toggle_border():
+def toggle_border() -> None:
     """Toggle the border based on the autokey state."""
     global draw_handle
 
@@ -101,7 +102,7 @@ def toggle_border():
     refresh_viewport()
 
 
-def subscribe_to_autokey():
+def subscribe_to_autokey() -> None:
     """Subscribe to changes in the autokey property."""
     bpy.msgbus.subscribe_rna(
         key=(bpy.types.ToolSettings, "use_keyframe_insert_auto"),
@@ -112,13 +113,13 @@ def subscribe_to_autokey():
     )
 
 
-def unsubscribe_from_autokey():
+def unsubscribe_from_autokey() -> None:
     """Unsubscribe from changes in the autokey property."""
     bpy.msgbus.clear_by_owner(msgbus_owner)
 
 
 @persistent
-def persistent_load_handler(dummy):
+def persistent_load_handler(dummy: object) -> None:
     """
     Handles subscription on new loads
     https://docs.blender.org/api/current/bpy.app.handlers.html#persistent-handler-example
@@ -156,7 +157,7 @@ class AutokeyHighlightPreferences(bpy.types.AddonPreferences):
         layout.prop(self, "border_width")
 
 
-def init_toggle_border():
+def init_toggle_border() -> float | None:
     """Initialize the toggle_border logic safely."""
     if bpy.context.scene:  # Ensure the scene is available
         toggle_border()
@@ -171,20 +172,21 @@ Classes = (
 register_classes, unregister_classes = register_classes_factory(Classes)
 
 
-def register():
+def register() -> None:
     """Register classes, append handlers, subscribe msgbus"""
 
     register_classes()
 
+    if bpy.app.background:
+        return  # don't register in background mode
+
     bpy.app.handlers.load_post.append(persistent_load_handler)
     subscribe_to_autokey()
 
-    if bpy.app.background:
-        return
     bpy.app.timers.register(init_toggle_border, first_interval=0.1)
 
 
-def unregister():
+def unregister() -> None:
     """Unsubscribe msgbus, cleanup global, unregister classes"""
     global draw_handle
 
