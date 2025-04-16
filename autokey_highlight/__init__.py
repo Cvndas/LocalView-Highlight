@@ -160,7 +160,8 @@ def init_toggle_border():
     """Initialize the toggle_border logic safely."""
     if bpy.context.scene:  # Ensure the scene is available
         toggle_border()
-    return None  # Stop the timer after execution
+        return None  # Stop the timer after execution
+    return 0.1
 
 
 Classes = (
@@ -172,10 +173,15 @@ register_classes, unregister_classes = register_classes_factory(Classes)
 
 def register():
     """Register classes, append handlers, subscribe msgbus"""
+
     register_classes()
 
     bpy.app.handlers.load_post.append(persistent_load_handler)
     subscribe_to_autokey()
+
+    if bpy.app.background:
+        return
+    bpy.app.timers.register(init_toggle_border, first_interval=0.1)
 
 
 def unregister():
