@@ -9,6 +9,6 @@
 
 -----
 
-Toggles a border in the viewport based on local state, with customizable color and width. It's a fork of https://github.com/Lauloque/Autokey-Highlight
+Toggles a border in the viewport based on local state, with customizable color and width. It's a fork of https://github.com/Lauloque/Autokey-Highlight and the Kofi link goes to the creator of the original addon. 
 
 
