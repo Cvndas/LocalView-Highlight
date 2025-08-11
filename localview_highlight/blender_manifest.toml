@@ -1,14 +1,13 @@
 schema_version = "1.0.0"
-id = "autokey_highlight"
+id = "localview_highlight"
 version = "1.0.7"
-name = "Autokey Highlight"
-tagline = "Highlights the viewport when autokey is enabled"
-maintainer = "Loïc \"Lauloque\" Dautry"
+name = "Localview Highlight"
+tagline = "Highlights the viewport when in Local View"
+maintainer = "Lrodas Potentilas"
 type = "add-on"
-website = "https://github.com/L0Lock/"
 # Optional list defined by Blender and server, see:
 # https://docs.blender.org/manual/en/dev/advanced/extensions/tags.html
-tags = ["Animation", "3D View", "System"]
+tags = ["3D View", "System"]
 blender_version_min = "4.2.0"
 # blender_version_max = "5.1.0"
 # License conforming to https://spdx.org/licenses/ (use "SPDX: prefix)

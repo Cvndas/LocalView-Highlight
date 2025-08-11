@@ -13,7 +13,7 @@ targetFolder="C:\\AppInstall\\Blender\\MyScripts\\extensions"
 # You can write in absolute and relative paths, I chose relative for simplicity.
 
 thingsToCopy=[
-   "autokey_highlight"
+   "localview_highlight"
    ]
 
 ## DEBUG

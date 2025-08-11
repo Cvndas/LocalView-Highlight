@@ -4,11 +4,9 @@ from typing import Sequence
 import bpy
 import gpu
 from gpu_extras.batch import batch_for_shader
-from bpy.app.handlers import persistent
 from bpy.utils import register_classes_factory
 
 draw_handle = None
-msgbus_owner = object()
 
 
 def shader_gamma_correction(color: Sequence[float]) -> list[float]:
@@ -23,8 +21,22 @@ def shader_gamma_correction(color: Sequence[float]) -> list[float]:
     return fixed_color
 
 
+def _in_local_view() -> bool:
+    """
+    Returns True if the current SpaceView3D is in Local View.
+    In recent Blender builds, SpaceView3D.local_view is None when not in Local View.
+    """
+    sd = bpy.context.space_data
+    # draw handler runs only for SpaceView3D, so sd should be SpaceView3D
+    return getattr(sd, "local_view", None) is not None
+
+
 def draw_callback_px() -> None:
-    """Draws a border around the 3D viewport based on user preferences."""
+    """Draws a border around the 3D viewport when in Local View."""
+    # Only draw while in Local View
+    if not _in_local_view():
+        return
+
     preferences = bpy.context.preferences.addons[__package__].preferences
     color = shader_gamma_correction(preferences.border_color)
     thickness = preferences.border_width + 1  # viewport 'eats' 1px away
@@ -71,70 +83,13 @@ def draw_callback_px() -> None:
     gpu.state.blend_set('NONE')
 
 
-def refresh_viewport() -> None:
-    """Refresh the viewport"""
-    for window in bpy.context.window_manager.windows:
-        for area in window.screen.areas:
-            if area.type == 'VIEW_3D':
-                area.tag_redraw()
-
-
-def toggle_border() -> None:
-    """Toggle the border based on the autokey state."""
-    global draw_handle
-
-    autokey_enabled = bpy.context.scene.tool_settings.use_keyframe_insert_auto
-
-    if autokey_enabled and draw_handle is None:
-        draw_handle = bpy.types.SpaceView3D.draw_handler_add(
-            draw_callback_px,
-            (),
-            'WINDOW',
-            'POST_PIXEL'
-        )
-    elif not autokey_enabled and draw_handle is not None:
-        bpy.types.SpaceView3D.draw_handler_remove(
-            draw_handle,
-            'WINDOW'
-        )
-        draw_handle = None
-
-    refresh_viewport()
-
-
-def subscribe_to_autokey() -> None:
-    """Subscribe to changes in the autokey property."""
-    bpy.msgbus.subscribe_rna(
-        key=(bpy.types.ToolSettings, "use_keyframe_insert_auto"),
-        owner=msgbus_owner,
-        args=(),
-        notify=toggle_border,
-        options={"PERSISTENT", }
-    )
-
-
-def unsubscribe_from_autokey() -> None:
-    """Unsubscribe from changes in the autokey property."""
-    bpy.msgbus.clear_by_owner(msgbus_owner)
-
-
-@persistent
-def persistent_load_handler(dummy: object) -> None:
-    """
-    Handles subscription on new loads
-    https://docs.blender.org/api/current/bpy.app.handlers.html#persistent-handler-example
-    """
-    subscribe_to_autokey()
-    init_toggle_border()
-
-
-class AutokeyHighlightPreferences(bpy.types.AddonPreferences):
-    """Preferences for the Autokey Border Highlight addon."""
+class LocalviewHighlightPreferences(bpy.types.AddonPreferences):
+    """Preferences for the Local View Border Highlight addon."""
     bl_idname = __package__
 
     border_color: bpy.props.FloatVectorProperty(
         name="Border Color",
-        description="Color of the border",
+        description="Color of the border when in Local View",
         subtype='COLOR',
         size=4,
         default=(1.0, 0.05, 0.05, 0.5),
@@ -142,7 +97,7 @@ class AutokeyHighlightPreferences(bpy.types.AddonPreferences):
     )
     border_width: bpy.props.IntProperty(
         name="Border Width",
-        description="Width of the border",
+        description="Width of the border (pixels)",
         default=5,
         subtype='PIXEL',
         min=1,
@@ -152,45 +107,39 @@ class AutokeyHighlightPreferences(bpy.types.AddonPreferences):
     def draw(self, context):
         """Draws addon's preferences GUI"""
         layout = self.layout
-        layout.label(text="Customize Border Appearance")
+        layout.label(text="Customize Border Appearance (Local View)")
         layout.prop(self, "border_color")
         layout.prop(self, "border_width")
 
 
-def init_toggle_border() -> float | None:
-    """Initialize the toggle_border logic safely."""
-    if bpy.context.scene:  # Ensure the scene is available
-        toggle_border()
-        return None  # Stop the timer after execution
-    return 0.1
-
-
 Classes = (
-    AutokeyHighlightPreferences,
+    LocalviewHighlightPreferences,
 )
 
 register_classes, unregister_classes = register_classes_factory(Classes)
 
 
 def register() -> None:
-    """Register classes, append handlers, subscribe msgbus"""
+    """Register classes and add draw handler."""
+    global draw_handle
 
     register_classes()
 
     if bpy.app.background:
         return  # don't register in background mode
 
-    bpy.app.handlers.load_post.append(persistent_load_handler)
-    subscribe_to_autokey()
-
-    bpy.app.timers.register(init_toggle_border, first_interval=0.1)
+    if draw_handle is None:
+        draw_handle = bpy.types.SpaceView3D.draw_handler_add(
+            draw_callback_px,
+            (),
+            'WINDOW',
+            'POST_PIXEL'
+        )
 
 
 def unregister() -> None:
-    """Unsubscribe msgbus, cleanup global, unregister classes"""
+    """Remove draw handler and unregister classes."""
     global draw_handle
-
-    unsubscribe_from_autokey()
 
     if draw_handle is not None:
         bpy.types.SpaceView3D.draw_handler_remove(draw_handle, 'WINDOW')
